@@ -1,0 +1,139 @@
+x-common-env: &common-env
+  environment:
+    RUNNER_SCOPE: "repo"
+    LABELS: "linux,x64,gpu"
+  security_opt:
+    - label:disable
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/tmp/runner:/tmp/runner"
+
+x-b-api-env: &b-api-env
+  RUNNER_TOKEN: "AFSD2ZUXPDMBQP4PMVTBXETICBALC"
+
+x-f-api-env: &f-api-env
+  RUNNER_TOKEN: "AFSD2ZSQZ7GEYY7SQHXKWBDICBALC"
+
+x-toolbox-api-env: &toolbox-api-env
+  RUNNER_TOKEN: "AFSD2ZUX5NCBV6XQUXGIQSDICBALC"
+
+services:
+  worker:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *f-api-env
+      REPO_URL: https://github.com/0OZ/monorepo-frontend
+      RUNNER_NAME: tensor-1
+      RUNNER_WORKDIR: /tmp/runner/f1
+    <<: *common-env
+
+  frontend-1:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *f-api-env
+      REPO_URL: https://github.com/0OZ/monorepo-frontend
+      RUNNER_NAME: frontend-1
+      RUNNER_WORKDIR: /tmp/runner/f2
+    <<: *common-env
+
+  frontend-2:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *f-api-env
+      REPO_URL: https://github.com/0OZ/monorepo-frontend
+      RUNNER_NAME: frontend-2
+      RUNNER_WORKDIR: /tmp/runner/f3
+    <<: *common-env
+
+  worker-2:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *f-api-env
+      REPO_URL: https://github.com/0OZ/monorepo-frontend
+      RUNNER_NAME: tensor-2
+      RUNNER_WORKDIR: /tmp/runner/f4
+    <<: *common-env
+
+  worker-3:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-7
+      RUNNER_WORKDIR: /tmp/runner/work-3
+    <<: *common-env
+
+  worker-4:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-3
+      RUNNER_WORKDIR: /tmp/runner/work-4
+    <<: *common-env
+
+  worker-5:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-4
+      RUNNER_WORKDIR: /tmp/runner/work-5
+    <<: *common-env
+
+  worker-6:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-6
+      RUNNER_WORKDIR: /tmp/runner/work-7
+    <<: *common-env
+
+  worker-9:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-9
+      RUNNER_WORKDIR: /tmp/runner/work-9
+    <<: *common-env
+
+  worker-10:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-10
+      RUNNER_WORKDIR: /tmp/runner/work-10
+    <<: *common-env
+
+  worker-11:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *toolbox-api-env
+      REPO_URL: https://github.com/0OZ/Toolbox
+      RUNNER_NAME: toolbox-1
+      RUNNER_WORKDIR: /tmp/runner/work-10
+    <<: *common-env
+
+  worker-12:
+    image: myoung34/github-runner:latest
+    restart: "always"
+    environment:
+      <<: *b-api-env
+      REPO_URL: https://github.com/0OZ/auftrag-select-backend
+      RUNNER_NAME: tensor-5
+      RUNNER_WORKDIR: /tmp/runner/work-12
+    <<: *common-env

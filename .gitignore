@@ -3,3 +3,4 @@ docker-compose.yaml.*
 .github_token 
 
 runner-update.log
+*.log

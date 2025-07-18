@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Script to set up crontab for daily runner token refresh and cleanup
+# Uses the Go runner-manager application instead of shell scripts
 # Usage: ./crontab-setup.sh <github_token>
 
 if [ -z "$1" ]; then
@@ -12,6 +13,14 @@ fi
 GITHUB_TOKEN="$1"
 RUNNER_DIR="/home/christian/actions-runner"
 TOKEN_SECRET_FILE="${RUNNER_DIR}/.github_token"
+RUNNER_BINARY="${RUNNER_DIR}/runner-manager"
+
+# Check if runner-manager binary exists
+if [ ! -f "$RUNNER_BINARY" ]; then
+  echo "Error: runner-manager binary not found at $RUNNER_BINARY"
+  echo "Please run ./deploy-runner-manager.sh first to build and deploy the binary"
+  exit 1
+fi
 
 # Store the token in a secure file
 echo "$GITHUB_TOKEN" > "$TOKEN_SECRET_FILE"
@@ -42,12 +51,12 @@ EOF
 chmod +x "$CLEANUP_SCRIPT"
 
 # Create crontab entries
-(crontab -l 2>/dev/null || echo "") | grep -v "$RUNNER_DIR/update-runners.sh\|$CLEANUP_SCRIPT" > temp_crontab
+(crontab -l 2>/dev/null || echo "") | grep -v "$RUNNER_BINARY\|$CLEANUP_SCRIPT" > temp_crontab
 
 # Add new entries
 cat >> temp_crontab << EOF
 # Update GitHub Runner tokens daily at 2:00 AM
-0 2 * * * cd $RUNNER_DIR && ./update-runners.sh \$(cat $TOKEN_SECRET_FILE) >> $RUNNER_DIR/runner-update.log 2>&1
+0 2 * * * cd $RUNNER_DIR && GITHUB_TOKEN=\$(cat $TOKEN_SECRET_FILE) $RUNNER_BINARY >> $RUNNER_DIR/runner-update.log 2>&1
 
 # Clean up old docker-compose backup files daily at 3:00 AM
 0 3 * * * $CLEANUP_SCRIPT >> $RUNNER_DIR/cleanup.log 2>&1
@@ -59,8 +68,9 @@ rm temp_crontab
 
 echo "✅ Crontab setup complete!"
 echo "• GitHub token securely stored in $TOKEN_SECRET_FILE"
-echo "• Runners will be updated daily at 2:00 AM"
+echo "• Runners will be updated daily at 2:00 AM using runner-manager"
 echo "• Old backup files will be cleaned up daily at 3:00 AM"
 echo "• Logs will be stored in $RUNNER_DIR/runner-update.log and $RUNNER_DIR/cleanup.log"
 echo ""
 echo "You can view the current crontab with: crontab -l"
+echo "Make sure the runner-manager binary is present in $RUNNER_DIR"

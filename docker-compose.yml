@@ -8,132 +8,83 @@ x-common-env: &common-env
     - "/var/run/docker.sock:/var/run/docker.sock"
     - "/tmp/runner:/tmp/runner"
 
-x-b-api-env: &b-api-env
-  RUNNER_TOKEN: "AFSD2ZUXPDMBQP4PMVTBXETICBALC"
-
 x-f-api-env: &f-api-env
-  RUNNER_TOKEN: "AFSD2ZSQZ7GEYY7SQHXKWBDICBALC"
+  RUNNER_TOKEN: "AFSD2ZWAZ5ZYP7B466OJHSTIPIASE"
+
+x-b-api-env: &b-api-env
+  RUNNER_TOKEN: "AFSD2ZUJS6S2Q5P2GO3VIC3IPIASE"
 
 x-toolbox-api-env: &toolbox-api-env
-  RUNNER_TOKEN: "AFSD2ZUX5NCBV6XQUXGIQSDICBALC"
+  RUNNER_TOKEN: "AFSD2ZTZL7E7AA7GRSNTPGDIPIASE"
+
 
 services:
-  worker:
+  service-1:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *f-api-env
       REPO_URL: https://github.com/0OZ/monorepo-frontend
-      RUNNER_NAME: tensor-1
-      RUNNER_WORKDIR: /tmp/runner/f1
+      RUNNER_NAME: runner-1
+      RUNNER_WORKDIR: /tmp/runner/T5pO6iplaWSiKzQmBRkb_
     <<: *common-env
 
-  frontend-1:
+  service-2:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *f-api-env
       REPO_URL: https://github.com/0OZ/monorepo-frontend
-      RUNNER_NAME: frontend-1
-      RUNNER_WORKDIR: /tmp/runner/f2
+      RUNNER_NAME: runner-2
+      RUNNER_WORKDIR: /tmp/runner/5m9eSRXzTAAwche66TnZd
     <<: *common-env
 
-  frontend-2:
+  service-3:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *f-api-env
       REPO_URL: https://github.com/0OZ/monorepo-frontend
-      RUNNER_NAME: frontend-2
-      RUNNER_WORKDIR: /tmp/runner/f3
+      RUNNER_NAME: runner-3
+      RUNNER_WORKDIR: /tmp/runner/HPk4khYshhUVf0WUcquGM
     <<: *common-env
 
-  worker-2:
-    image: myoung34/github-runner:latest
-    restart: "always"
-    environment:
-      <<: *f-api-env
-      REPO_URL: https://github.com/0OZ/monorepo-frontend
-      RUNNER_NAME: tensor-2
-      RUNNER_WORKDIR: /tmp/runner/f4
-    <<: *common-env
-
-  worker-3:
+  service-4:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *b-api-env
       REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-7
-      RUNNER_WORKDIR: /tmp/runner/work-3
+      RUNNER_NAME: runner-4
+      RUNNER_WORKDIR: /tmp/runner/3-gZ5cx_mZSv-aSIk74uG
     <<: *common-env
 
-  worker-4:
+  service-5:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *b-api-env
       REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-3
-      RUNNER_WORKDIR: /tmp/runner/work-4
+      RUNNER_NAME: runner-5
+      RUNNER_WORKDIR: /tmp/runner/VqDYKQ9zH7tWg_pz4WOrm
     <<: *common-env
 
-  worker-5:
+  service-6:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *b-api-env
       REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-4
-      RUNNER_WORKDIR: /tmp/runner/work-5
+      RUNNER_NAME: runner-6
+      RUNNER_WORKDIR: /tmp/runner/6nlGpfyNIKCYo3YpnLXGE
     <<: *common-env
 
-  worker-6:
-    image: myoung34/github-runner:latest
-    restart: "always"
-    environment:
-      <<: *b-api-env
-      REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-6
-      RUNNER_WORKDIR: /tmp/runner/work-7
-    <<: *common-env
-
-  worker-9:
-    image: myoung34/github-runner:latest
-    restart: "always"
-    environment:
-      <<: *b-api-env
-      REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-9
-      RUNNER_WORKDIR: /tmp/runner/work-9
-    <<: *common-env
-
-  worker-10:
-    image: myoung34/github-runner:latest
-    restart: "always"
-    environment:
-      <<: *b-api-env
-      REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-10
-      RUNNER_WORKDIR: /tmp/runner/work-10
-    <<: *common-env
-
-  worker-11:
+  service-7:
     image: myoung34/github-runner:latest
     restart: "always"
     environment:
       <<: *toolbox-api-env
       REPO_URL: https://github.com/0OZ/Toolbox
-      RUNNER_NAME: toolbox-1
-      RUNNER_WORKDIR: /tmp/runner/work-10
-    <<: *common-env
-
-  worker-12:
-    image: myoung34/github-runner:latest
-    restart: "always"
-    environment:
-      <<: *b-api-env
-      REPO_URL: https://github.com/0OZ/auftrag-select-backend
-      RUNNER_NAME: tensor-5
-      RUNNER_WORKDIR: /tmp/runner/work-12
+      RUNNER_NAME: runner-7
+      RUNNER_WORKDIR: /tmp/runner/bABOpZKAmGJ8AIRoTCcZU
     <<: *common-env

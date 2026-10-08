@@ -40,9 +40,45 @@ func getDefaultConfig() types.Config {
 		},
 		{
 			Owner:       "0OZ",
-			Name:        "auftrag-ai-frontend",
-			AnchorName:  "aai-fd",
-			RunnerCount: 2,
+			Name:        "auftrag-one",
+			AnchorName:  "aai",
+			RunnerCount: 15,
+		},
+		{
+			Owner:       "0OZ",
+			Name:        "onsand",
+			AnchorName:  "onsand",
+			RunnerCount: 25,
+		},
+		{
+			Owner:       "evest-io",
+			Name:        "notice-taxonomy",
+			AnchorName:  "notice-taxonomy",
+			RunnerCount: 3,
+		},
+		{
+			Owner:       "0OZ",
+			Name:        "auftrag-select-ext-tools",
+			AnchorName:  "ext-tools-api-env",
+			RunnerCount: 3,
+		},
+		{
+			Owner:       "0OZ",
+			Name:        "fnlt",
+			AnchorName:  "fnlt",
+			RunnerCount: 4,
+		},
+		{
+			Owner:       "0OZ",
+			Name:        "notchable",
+			AnchorName:  "notchable",
+			RunnerCount: 1,
+		},
+		{
+			Owner:       "0OZ",
+			Name:        "flatmo",
+			AnchorName:  "flatmo",
+			RunnerCount: 4,
 		},
 	}
 

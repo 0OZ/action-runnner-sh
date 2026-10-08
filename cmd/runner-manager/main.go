@@ -22,6 +22,14 @@ func main() {
 		configFile  string
 		numRunners  int
 		skipDocker  bool
+
+		regURL        string
+		regToken      string
+		regName       string
+		regLabels     string
+		regWork       string
+		regReplace    bool
+		regUnattended bool
 	)
 
 	flag.StringVar(&githubToken, "token", "", "GitHub Personal Access Token (required)")
@@ -29,7 +37,27 @@ func main() {
 	flag.StringVar(&configFile, "config", "runners-config.json", "Configuration file path")
 	flag.IntVar(&numRunners, "runners", 2, "Number of runners to create for each new repository")
 	flag.BoolVar(&skipDocker, "skip-docker", false, "Skip Docker operations (only generate compose file)")
+
+	flag.StringVar(&regURL, "reg-url", "", "Register a runner directly via ./config.sh (GitHub repo URL, e.g. https://github.com/owner/repo)")
+	flag.StringVar(&regToken, "reg-token", "", "Runner registration token for use with -reg-url")
+	flag.StringVar(&regName, "reg-name", "", "Runner name for -reg-url")
+	flag.StringVar(&regLabels, "reg-labels", "", "Comma-separated labels for -reg-url")
+	flag.StringVar(&regWork, "reg-work", "/work", "Work directory for -reg-url (default /work)")
+	flag.BoolVar(&regReplace, "reg-replace", false, "Replace any existing runner with the same name for -reg-url")
+	flag.BoolVar(&regUnattended, "reg-unattended", true, "Run ./config.sh in unattended mode for -reg-url")
 	flag.Parse()
+
+	// Direct runner registration via ./config.sh (does not require a PAT)
+	if regURL != "" || regToken != "" {
+		if regURL == "" || regToken == "" {
+			log.Fatal("Error: both -reg-url and -reg-token are required for direct registration")
+		}
+		if err := runConfigSh(regURL, regToken, regName, regLabels, regWork, regReplace, regUnattended); err != nil {
+			log.Fatalf("Error running ./config.sh: %v", err)
+		}
+		log.Println("===== Runner registration completed =====")
+		return
+	}
 
 	if githubToken == "" {
 		githubToken = os.Getenv("GITHUB_TOKEN")

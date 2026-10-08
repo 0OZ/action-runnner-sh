@@ -4,4 +4,4 @@ docker-compose.yaml.*
 
 runner-update.log
 *.log
-runner-manager
+/runner-manager
